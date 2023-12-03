@@ -1,6 +1,6 @@
 {
   "name": "pkgtrap",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Makes a local copy of a list of WebR WASM packages and their dependencies.",
   "main": "index.mjs",
   "type": "module",

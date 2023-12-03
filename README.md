@@ -1,10 +1,10 @@
-# pkgtrap: Install WebR packages to a local filesystem directory.
+# pkgtrap: Install WebR packages to a local filesystem directory
 
-[![npm
-version](https://badge.fury.io/js/pkgtrap.svg)](https://badge.fury.io/js/pkgtrap)
+![](https://img.shields.io/npm/v/pkgtrap.png)
+![license](https://img.shields.io/badge/license-MIT-success.png)
 
 `pkgtrap`
-([GL](https://gitlab.com/hrbrmstr/pkgtrap)\|[NPM](https://www.npmjs.com/package/pkgtrap)\|[Docs](https://hrbrmstr.gitlab.io/pkgtrap/pkgtrap/0.1.1/))
+([GL](https://gitlab.com/hrbrmstr/pkgtrap)\|[NPM](https://www.npmjs.com/package/pkgtrap)\|[Docs](https://hrbrmstr.gitlab.io/pkgtrap/pkgtrap/0.1.2/))
 is a small Node.js CLI application to make it easier to sync WebR WASM R
 packages to a local filesystem for CLI or web apps.
 
