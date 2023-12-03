@@ -7,7 +7,9 @@ engine: knitr
 ---
 [![npm version](https://badge.fury.io/js/pkgtrap.svg)](https://badge.fury.io/js/pkgtrap)
 
-`pkgtrap` ([GL](https://gitlab.com/hrbrmstr/pkgtrap)|[NPM](https://www.npmjs.com/package/pkgtrap)) is a small Node.js CLI application to make it easier to sync WebR WASM R packages to a local filesystem for CLI or web apps. See [the WebR CLI Book](https://rud.is/books/webr-cli-book/) for details.
+`pkgtrap` ([GL](https://gitlab.com/hrbrmstr/pkgtrap)|[NPM](https://www.npmjs.com/package/pkgtrap)|[Docs](https://hrbrmstr.gitlab.io/pkgtrap/pkgtrap/0.1.1/)) is a small Node.js CLI application to make it easier to sync WebR WASM R packages to a local filesystem for CLI or web apps.
+
+See [the WebR CLI Book](https://rud.is/books/webr-cli-book/) for details.
 
 It is intended to be run as a CLI and is on NPM, so you can install it via:
 

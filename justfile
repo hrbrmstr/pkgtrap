@@ -23,3 +23,7 @@
   test $(ls ./pkgs) == "fs" || echo "Test failed!"
   rm -rf ./pkgs
   echo "Test passed!"
+
+# Publish new version to NPM
+@publish:
+  npm publish

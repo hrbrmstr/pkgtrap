@@ -1,16 +1,15 @@
 {
   "name": "pkgtrap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Makes a local copy of a list of WebR WASM packages and their dependencies.",
   "main": "index.mjs",
   "type": "module",
-  "keywords": [
-    "WebR",
-    "R",
-    "RStats"
-  ],
+  "keywords": ["WebR", "R", "RStats"],
   "bin": {
     "pkgtrap": "index.mjs"
+  },
+  "script": {
+    "docs": "jsdoc -c jsdoc.json"
   },
   "author": "",
   "license": "MIT",

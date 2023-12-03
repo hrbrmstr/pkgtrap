@@ -5,7 +5,7 @@
  * 
  * @author boB Rudis (@hrbrmstr)
  * @module pkgtrap
- * Seeing where this ends up
+ * Main program that parses CLI input, instantiates WebR, loads and syncs packages.
  */
 import * as path from 'path'
 import { existsSync, mkdirSync, rmdirSync } from 'fs';
