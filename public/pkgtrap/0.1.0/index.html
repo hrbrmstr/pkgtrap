@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Home</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="pkgtrap%250ASeeing%2520where%2520this%2520ends%2520upmodule_.html">pkgtrap
+Seeing where this ends up</a></li></ul><h3>Global</h3><ul><li><a href="global.html#__appdirname">__appdirname</a></li><li><a href="global.html#__filename">__filename</a></li><li><a href="global.html#appDir">appDir</a></li><li><a href="global.html#cwd">cwd</a></li><li><a href="global.html#makeAndMount">makeAndMount</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p></p>
+                    <h1>Home</h1>
+                </header>
+                
+
+
+
+    
+
+
+    <h3>pkgtrap 0.1.0</h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>pkgtrap: Install WebR packages to a local filesystem directory.</h1>
+<p><code>pkgtrap</code> is a small Node.js CLI application to make it easier to sync
+WebR WASM R packages to a local filesystem for CLI or web apps.</p>
+<p>It is intended to be run as a CLI and is on NPM, so you can install it
+via:</p>
+<pre class="prettyprint source lang-bash"><code>$ npm install -g pkgtrap
+</code></pre>
+<h2>Usage</h2>
+<pre class="prettyprint source lang-bash"><code>pkgtrap --help
+</code></pre>
+<pre><code>Usage: pkgtrap [options] [packages...]
+
+Makes a local copy of a list of WebR WASM packages and their dependencies.
+
+Options:
+  -V, --version           output the version number
+  -o, --output-dir &lt;dir&gt;  path to output directory where WebR WASM packages
+                          will be installed (will be created if it does not
+                          exist) (default: &quot;./pkgs&quot;)
+  -h, --help              display help for command
+</code></pre>
+<p><code>pkgtrap</code> defaults to using a local-to-current-working-directory
+<code>./pkgs</code> directory but you can specify an alternate one via <code>-o</code> or
+<code>--output-dir</code>.</p>
+<p>Here’s an example run that loads up {fs} and {glue}</p>
+<pre class="prettyprint source lang-bash"><code>pkgtrap fs glue
+</code></pre>
+<pre><code>Creating output directory /Users/hrbrmstr/projects/pkgtrap/pkgs
+Mounting output directory to WebR's Emscripten filesystem…
+Installing designated packages…
+Downloading webR package: fs
+
+Downloading webR package: glue
+
+Syncing packages to /Users/hrbrmstr/projects/pkgtrap/pkgs
+Done!
+</code></pre>
+<pre class="prettyprint source lang-bash"><code>tree -L 1 ./pkgs
+</code></pre>
+<pre><code>./pkgs
+├── fs
+└── glue
+
+3 directories, 0 files
+</code></pre></article>
+    </section>
+
+
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

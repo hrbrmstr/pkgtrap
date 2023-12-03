@@ -1,0 +1,11 @@
+image: node:latest
+
+pages:
+  script:
+    - npm install jsdoc
+    - npx jsdoc -c jsdoc.json --package ./package.json
+  artifacts:
+    paths:
+      - public
+  only:
+    - batman

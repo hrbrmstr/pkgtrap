@@ -4,7 +4,11 @@
   "description": "Makes a local copy of a list of WebR WASM packages and their dependencies.",
   "main": "index.mjs",
   "type": "module",
-  "keywords": ["WebR", "R", "RStats"],
+  "keywords": [
+    "WebR",
+    "R",
+    "RStats"
+  ],
   "bin": {
     "pkgtrap": "index.mjs"
   },
@@ -14,5 +18,9 @@
     "chalk": "^5.3.0",
     "commander": "^11.1.0",
     "webr": "^0.2.2"
+  },
+  "devDependencies": {
+    "better-docs": "^2.7.2",
+    "taffydb": "^2.7.3"
   }
 }
