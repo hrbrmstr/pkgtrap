@@ -1,0 +1,200 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> index.mjs</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="pkgtrap%250AMain%2520program%2520that%2520parses%2520CLI%2520input,%2520instantiates%2520WebR,%2520loads%2520and%2520syncs%2520packages.module_.html">pkgtrap
+Main program that parses CLI input, instantiates WebR, loads and syncs packages.</a></li></ul><h3>Global</h3><ul><li><a href="global.html#__appdirname">__appdirname</a></li><li><a href="global.html#__filename">__filename</a></li><li><a href="global.html#appDir">appDir</a></li><li><a href="global.html#cwd">cwd</a></li><li><a href="global.html#makeAndMount">makeAndMount</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>index.mjs</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>#!/usr/bin/env node
+
+/**
+ * Install WebR Packages To A Local Directory
+ * 
+ * @author boB Rudis (@hrbrmstr)
+ * @module pkgtrap
+ * Main program that parses CLI input, instantiates WebR, loads and syncs packages.
+ */
+import * as path from 'path'
+import { existsSync, mkdirSync, rmdirSync } from 'fs';
+
+import chalk from 'chalk'
+
+import { Command } from 'commander'
+
+import { WebR } from "webr";
+import { makeAndMount, appDir, cwd } from './src/utils.mjs';
+
+// these base R come along with the fs::dir_copy call so we remove them
+const corePkgs = [ "base", "compiler", "datasets", "grDevices", "graphics", "grid", "methods", "parallel", "splines", "stats", "stats4", "tcltk", "tools", "translations", "utils", "webr" ]
+
+/**
+ * Take in a list of packages and an optional destination directory and 
+ * have WebR install the packages, then use JavaScript to sync the internal
+ * Emscripten library directory to the specified local filesystem path.
+ * 
+ * @param {string[]} pkgs 
+ * @param {Object} options an object containing an `outputDir` field
+ * @returns {void}
+ */
+async function trapPackages(pkgs, options) {
+
+  const webR = new WebR();
+  await webR.init();
+
+  const dir = path.join(cwd, options.outputDir);
+
+  if (!existsSync(dir)) {
+    console.info(chalk.blue(`Creating output directory ${dir}`))
+    mkdirSync(dir);
+  }
+
+  console.info(chalk.blue(`Mounting output directory to WebR's Emscripten filesystem…`))
+
+  await makeAndMount(webR, dir, '/pkgs')
+
+  console.info(chalk.blue(`Installing designated packages…`))
+
+  pkgs.push('fs')
+  pkgs = [ ... new Set(pkgs) ]
+
+  await webR.installPackages(pkgs)
+
+  console.info(chalk.blue(`Syncing packages to ${dir}`))
+
+  await webR.evalRVoid(`
+fs::dir_copy("/usr/lib/R/library", "/pkgs", overwrite=TRUE)
+`)
+
+  for (const pkg of corePkgs) {
+    rmdirSync(path.join(dir, pkg), { recursive: true })
+  }
+
+  console.info(chalk.green(`Done!`))
+
+  process.exit(0)
+}
+
+/**
+ * Process command line and collect packages.
+ */
+
+const program = new Command()
+program
+  .name('pkgtrap')
+  .description('Makes a local copy of a list of WebR WASM packages and their dependencies.')
+  .version('0.1.0')
+  .option('-o, --output-dir &lt;dir>', `path to output directory where WebR WASM packages will be installed (will be created if it does not exist)`, "./pkgs")
+  .arguments("[packages...]", "at least one package to 'trap', but can be a space-separated list of packages")
+  .action(trapPackages)
+  .parse()
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>
